@@ -1,174 +1,40 @@
-class Node {
-
-    private String data;
-private Node next;
-
-public Node(String data) {
-this.data = data;
-}
-
-public void setData(String data) {
-this.data = data;
-}
-
-public void setNext(Node node) {
-this.next = node;
-}
-
-public String getData() {
-return this.data;
-}
-
-public Node getNext() {
-return this.next;
-}
-}
-
-
-class LinkedList {
-
-    private Node head;
-private Node tail;
-
-public Node getHead() {
-return this.head;
-}
-
-public Node getTail() {
-return this.tail;
-}
-
-public void addAtEnd(String data) {
-Node node = new Node(data);
-
-if (this.head == null) {
-this.head = this.tail = node;
-} else {
-this.tail.setNext(node);
-this.tail = node;
-}
-}
-
-public void addAtBeginning(String data) {
-Node node = new Node(data);
-
-if (this.head == null) {
-this.head = this.tail = node;
-}
-
-else {
-node.setNext(this.head);
-this.head = node;
-}
-}
-
-public void display() {
-Node temp = this.head;
-
-while (temp != null) {
-System.out.println(temp.getData());
-temp = temp.getNext();
-}
-}
-
-public Node find(String data) {
-Node temp = this.head;
-
-while (temp != null) {
-if (temp.getData().equals(data))
-return temp;
-temp = temp.getNext();
-}
-return null;
-}
-
-public void insert(String data, String dataBefore) {
-Node node = new Node(data);
-
-if (this.head == null)
-this.head = this.tail = node;
-else {
-Node nodeBefore = this.find(dataBefore);
-if (nodeBefore != null) {
-node.setNext(nodeBefore.getNext());
-nodeBefore.setNext(node);
-if (nodeBefore == this.tail)
-this.tail = node;
-} else
-System.out.println("Node not found");
-}
-}
-
-public void delete(String data) {
-
-if (this.head == null)
-System.out.println("List is empty");
-else {
-Node node = this.find(data);
-
-if (node == null)
-System.out.println("Node not found");
-
-if (node == this.head) {
-this.head = this.head.getNext();
-node.setNext(null);
-
-if (node == this.tail)
-tail = null;
-   }
-   else {
-Node nodeBefore = null;
-Node temp = this.head;
-while (temp != null) {
-if (temp.getNext() == node) {
-nodeBefore = temp;
-break;
-   }
-   temp = temp.getNext();
-   }
-
-nodeBefore.setNext(node.getNext());
-
-if (node == this.tail)
-this.tail = nodeBefore;
-node.setNext(null);
-}
-}
-}
-}
-
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Iterator;
 
 class Tester {
+    
+   public static List<Object> concatenateLists(List<Object> listOne, List<Object> listTwo) {
+    List<Object> concatenatedList = new LinkedList<>(listOne); // Start with listOne
+    
+    // Add elements of listTwo in reverse order
+    for (int i = listTwo.size() - 1; i >= 0; i--) {
+        concatenatedList.add(listTwo.get(i));
+    }
+    
+    return concatenatedList;
+    }
 
-    public static void main(String args[]) {
-         
-   LinkedList linkedList = new LinkedList();
-   linkedList.addAtEnd("AB");
-   linkedList.addAtEnd("BC");
-   linkedList.addAtEnd("CD");
-   linkedList.addAtEnd("DE");
-   linkedList.addAtEnd("EF");
 
-   String elementToBeFound = "CD";
-   int position = findPosition(elementToBeFound, linkedList.getHead());
-   if (position != 0)
-       System.out.println("The position of the element is " + position);
-   else
-       System.out.println("The element is not found!");
-}
 
-public static int findPosition(String element, Node head) {
-        Node current = head;
-        int position = 0;
-
-        while (current != null) {
-            position++;
-            if (current.getData().equals(element)) {
-                return position;
-            }
-            current = current.getNext();
-        }
-
-        return 0;
-}
+	public static void main(String args[]) {
+		List<Object> listOne = new LinkedList<Object>();
+		listOne.add("Hello");
+		listOne.add(102);
+		listOne.add(25);
+		listOne.add(38.5);
+		
+		List<Object> listTwo = new LinkedList<Object>();
+		listTwo.add(150);
+		listTwo.add(200);
+		listTwo.add('A');
+		listTwo.add("Welcome");
+		
+		List<Object> concatenatedList = concatenateLists(listOne, listTwo);
+		
+		System.out.println("Concatenated linked list:");
+		for (Object value : concatenatedList) {
+			System.out.print(value+" ");
+		}
+	}
 }
